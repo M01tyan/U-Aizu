@@ -1,11 +1,13 @@
 // This is a JavaScript file
 window.fn = {};
 
+//menu open
 window.fn.open = function () {
   var menu = document.getElementById('menu');
   menu.open();
 };
 
+//page切り替え
 window.fn.load = function (page) {
   var menu = document.getElementById('menu');
   var myNavigator = document.getElementById('myNavigator');
@@ -14,6 +16,7 @@ window.fn.load = function (page) {
   myNavigator.resetToPage(page, { animation: 'fade' });
 };
 
+//ページ切り替え時のデータ渡し
 document.addEventListener('init', function (event) {
   if (event.target.id === 'pageNav1') {
     var title = event.target.data && event.target.data.title ? event.target.data.title : 'Custom Page';
@@ -25,6 +28,7 @@ document.addEventListener('init', function (event) {
   }
 });
 
+//
 var customPush = function () {
   myNavigator.pushPage('pageNav1.html', { data: { title: myNavigator.topPage.querySelector('ons-input').value } })
 };
