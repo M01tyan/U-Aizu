@@ -1,0 +1,10 @@
+/* This is a CSS file */
+.selector {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.list-item__thumbnail{
+    width: 70px;
+    height: 70px;
+}

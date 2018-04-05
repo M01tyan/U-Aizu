@@ -1,7 +1,7 @@
 <ons-page>
   <ons-toolbar>
     <div class="center">
-      Splitter+Navigator
+      施設利用状況
     </div>
     <div class="right">
       <ons-toolbar-button onclick="fn.open()">
@@ -9,7 +9,29 @@
       </ons-toolbar-button>
     </div>
   </ons-toolbar>
-
+  
+  <div class="selector">
+    <ons-select id="choose-sel" onchange="editSelects(event)">
+      <option value="basic">講義棟</option>
+      <option value="material">研究棟</option>
+      <option value="underbar">学生ホール</option>
+      <option value="underbar">体育館</option>
+      <option value="underbar">運動場</option>
+      <option value="underbar">UBIC</option>
+    </ons-select>
+  </div>
+  <div class="usedlist">
+    <ons-list-item>
+      <div class="left">
+        <img class="list-item__thumbnail" src="https://placekitten.com/g/60/60">
+      </div>
+      <div class="center">
+        <span class="list-item__title">Cutest kitty</span><span class="list-item__subtitle">On the Internet</span>
+      </div>
+    </ons-list-item>
+  </div>
+  
+  <!--
   <h2>施設使用状況</h2>
   <ons-list-title>Card List</ons-list-title>
   <ons-list>
@@ -21,4 +43,5 @@
   <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
     Swipe left to open the menu!
   </p>
+  -->
 </ons-page>
