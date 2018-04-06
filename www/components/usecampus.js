@@ -1,25 +1,32 @@
 // This is a JavaScript file
-var materiallists = new Array(5);
-var underbarlists = new Array(6);
-materiallists[0] = "M1";
-materiallists[1] = "M2";
-materiallists[2] = "M3";
-materiallists[3] = "M4";
-materiallists[4] = "M5";
-underbarlists[0] = "M6";
-underbarlists[1] = "M7";
-underbarlists[2] = "M8";
-underbarlists[3] = "M9";
-underbarlists[4] = "M10";
-underbarlists[5] = "M11";
+var lectureLists = new Array("M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "S12", "Aud", "LTh");
+var exerciseLists = new Array("CALL1", "CALL2", "iLab1", "iLab2", "NRLA", "NRLB", "std1", "std2", "std3", "std4", "std5", "std6");
+var experimentLists = new Array("hdw1", "hdw2", "hdw3", "hdw4");
+var conferenceLists = new Array("114", "128", "212", "中会議室", "小会議室", "大会議室", "F1会議室", "N-Lounge", "S-Lounge");
+var seminarLists = new Array("sem06", "sem07", "sem08", "sem09", "sem10");
+var otherLists = new Array("UBIC", "Geek Dojo", "グローバルラウンジ", "武道場", "体育館(半面1)", "体育館(半面2)", "プール", "運動場(フィールド側)", "運動場(芝生側)", "テニスコートA1", "テニスコートA2", "テニスコートB1", "テニスコートB2");
 
 function editSelects(event) {
-  if (event.target.value == 'material') {
-    document.getElementById('choose-sel').setAttribute('modifier', event.target.value);
-    setUsedLists(materiallists);
-  } else if (event.target.value == 'underbar') {
-    setUsedLists(underbarlists);
-
+  document.getElementById('choose-sel').setAttribute('modifier', event.target.value);
+  switch (event.target.value) {
+    case 'lecture':
+      setUsedLists(lectureLists);
+      break;
+    case 'exercise':
+      setUsedLists(exerciseLists);
+      break;
+    case 'experiment':
+      setUsedLists(experimentLists);
+      break;
+    case 'conference':
+      setUsedLists(conferenceLists);
+      break;
+    case 'seminar':
+      setUsedLists(seminarLists);
+      break;
+    case 'other':
+      setUsedLists(otherLists);
+      break;
   }
 }
 
@@ -34,6 +41,9 @@ function setUsedLists(lists) {
                                                 '</div>' +
                                                 '<div class="center">' +
                                                   '<span class="list-item__title">' + lists[index] + '</span><span class="list-item__subtitle">On the Internet</span>' +
+                                                '</div>' +
+                                                '<div class="right">' +
+                                                  '<ons-icon size="25px" icon="ion-information-circled"></ons-icon>' +
                                                 '</div>' +
                                               '</ons-list-item>');
       },
