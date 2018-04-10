@@ -1,4 +1,11 @@
 function executeQuery(tx) {
+        /*
+        tx.executeSql('DROP TABLE IF EXISTS RoomTable');
+        tx.executeSql('DROP TABLE IF EXISTS TypeTable');
+        tx.executeSql('DROP TABLE IF EXISTS PlaceTable');
+        tx.executeSql('DROP TABLE IF EXISTS TimeTable');
+        tx.executeSql('DROP TABLE IF EXISTS WeekTable');
+        */
         tx.executeSql('CREATE TABLE IF NOT EXISTS RoomTable (roomid primary key, name, typeid , placeid, timeid, weekid, status, foreign key (typeid) references TypeTable(typeid), foreign key (placeid) references TimeTable(placeid), foreign key (timeid) references TimeTable(timeid), foreign key (weekid) references TimeTable(weekid))');
         tx.executeSql('CREATE TABLE IF NOT EXISTS TypeTable (typeid, name)');
         tx.executeSql('CREATE TABLE IF NOT EXISTS PlaceTable (placeid, name)');
@@ -29,6 +36,7 @@ function executeQuery(tx) {
         tx.executeSql('INSERT INTO WeekTable VALUES (2, "毎日")');
         tx.executeSql('INSERT INTO WeekTable VALUES (3, "授業のみ")');
         tx.executeSql('INSERT INTO RoomTable VALUES (1, "M1", 1, 2, 1, 1, "true")');
+        
 }
 
 function queryDB(tx) {
