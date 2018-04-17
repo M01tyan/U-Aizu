@@ -1,7 +1,7 @@
 <ons-page>
-  <ons-toolbar>
+  <ons-toolbar onclick="TestLists()">
     <div class="center">
-      Splitter+Navigator
+      ons-lazy-repeat
     </div>
     <div class="right">
       <ons-toolbar-button onclick="fn.open()">
@@ -10,9 +10,9 @@
     </div>
   </ons-toolbar>
 
-  <h2>キャンパスマップ</h2>
+  <h2>リスト</h2>
 
-  <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-    Swipe left to open the menu!
-  </p>
+  <ons-list>
+    <ons-lazy-repeat id="test-list"></ons-lazy-repeat>
+  </ons-list>
 </ons-page>

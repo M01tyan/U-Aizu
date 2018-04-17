@@ -6,66 +6,30 @@ var roomlist;
 
 function editSelects(event) {
   var RoomDB = ncmb.DataStore("RoomDB");
-  console.log(event.target[0]);
+  var searchType;
   document.getElementById('choose-sel').setAttribute('modifier', event.target.value);
   switch (event.target.value) {
     case 'lecture':
-      RoomDB.equalTo("type", "講義室")
-                   .fetchAll()
-                   .then(function(results){
-                     roomlist = results;
-                     setUsedLists(results);
-                   })
-                   .catch(function(error){
-                      alert("error!");
-                   });
-      break;
+      searchType = "講義室";
+    break;
     case 'exercise':
-       RoomDB.equalTo("type", "演習室")
-                   .fetchAll()
-                   .then(function(results){
-                     roomlist = results;
-                     setUsedLists(results);
-                   })
-                   .catch(function(error){
-                      alert("error!");
-                   });
-      break;
+       searchType = "演習室";
+    break;
     case 'experiment':
-       RoomDB.equalTo("type", "実験室")
-                   .fetchAll()
-                   .then(function(results){
-                     roomlist = results;
-                     setUsedLists(results);
-                   })
-                   .catch(function(error){
-                      alert("error!");
-                   });
-      break;
+       searchType = "実験室";
+    break;
     case 'conference':
-       RoomDB.equalTo("type", "会議室")
-                   .fetchAll()
-                   .then(function(results){
-                     roomlist = results;
-                     setUsedLists(results);
-                   })
-                   .catch(function(error){
-                      alert("error!");
-                   });
-      break;
+       searchType = "会議室";
+    break;
     case 'seminar':
-       RoomDB.equalTo("type", "ゼミ室")
-                   .fetchAll()
-                   .then(function(results){
-                     roomlist = results;
-                     setUsedLists(results);
-                   })
-                   .catch(function(error){
-                      alert("error!");
-                   });
-      break;
+       searchType = "ゼミ室";
+    break;
     case 'other':
-       RoomDB.equalTo("type", "その他")
+       searchType = "その他";
+    break;
+  }
+  RoomDB.equalTo("type", searchType)
+                   .order("orderid", false)
                    .fetchAll()
                    .then(function(results){
                      roomlist = results;
@@ -74,8 +38,6 @@ function editSelects(event) {
                    .catch(function(error){
                       alert("error!");
                    });
-      break;
-  }
 }
 
 function setUsedLists(lists) {
@@ -91,7 +53,7 @@ function setUsedLists(lists) {
                                                   '<span class="list-item__title">' + lists[index].roomname + '</span><span class="list-item__subtitle">On the Internet</span>' +
                                                 '</div>' +
                                                 '<div class="right">' +
-                                                  '<ons-icon data-index="'+index+'" size="25px" icon="ion-information-circled" onclick="showTemplateDialog('+index+')"></ons-icon>' +
+                                                  '<ons-icon data="'+index+'" size="25px" icon="ion-information-circled" onclick="showTemplateDialog('+index+')"></ons-icon>' +
                                                 '</div>' +
                                               '</ons-list-item>');
       },
@@ -136,3 +98,20 @@ function hideDialog(id) {
   //dialogを閉じる
   document.getElementById(id).hide();
 }
+
+
+document.addEventListener('deviceready',function(){
+   //ref = window.open('https://csweb.u-aizu.ac.jp/campusweb/campusportal.do?page=main', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes');
+  //Ajax通信
+  $.ajax({
+    type: 'GET',
+    url: 'https://csweb.u-aizu.ac.jp/campusweb/campussquare.do?_flowId=KHW0001300-flow',
+    datatype: 'html',
+    success: function(data){
+      console.log(data);
+    },
+    error: function(error){
+      console.log(error);
+    }
+  });
+},false);
