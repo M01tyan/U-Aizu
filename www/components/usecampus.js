@@ -98,20 +98,3 @@ function hideDialog(id) {
   //dialogを閉じる
   document.getElementById(id).hide();
 }
-
-
-document.addEventListener('deviceready',function(){
-   //ref = window.open('https://csweb.u-aizu.ac.jp/campusweb/campusportal.do?page=main', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes');
-  //Ajax通信
-  $.ajax({
-    type: 'GET',
-    url: 'https://csweb.u-aizu.ac.jp/campusweb/campussquare.do?_flowId=KHW0001300-flow',
-    datatype: 'html',
-    success: function(data){
-      console.log(data);
-    },
-    error: function(error){
-      console.log(error);
-    }
-  });
-},false);

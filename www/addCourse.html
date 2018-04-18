@@ -1,0 +1,29 @@
+<ons-page>
+  <ons-toolbar>
+    <div class="center">
+      欠席数カウント
+    </div>
+    <div class="right">
+      <ons-toolbar-button onclick="fn.open()">
+        <ons-icon icon="md-menu"></ons-icon>
+      </ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+
+  <div style="text-align: center; margin-top: 10px">
+    <div class="segment" style="width: 280px; margin: 0 auto;">
+      <div class="segment__item" onclick="fn.load('attendence.html')">
+        <input type="radio" class="segment__input" name="segment-a">
+        <div class="segment__button">カウント</div>
+      </div>
+      <div class="segment__item">
+        <input type="radio" class="segment__input" name="segment-a" checked>
+        <div class="segment__button">履修追加</div>
+      </div>
+      <div class="segment__item" onclick="fn.load('deleteCourse.html')">
+        <input type="radio" class="segment__input" name="segment-a">
+        <div class="segment__button">履修取り消し</div>
+      </div>
+    </div>
+  </div>
+</ons-page>

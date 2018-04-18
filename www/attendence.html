@@ -1,7 +1,7 @@
 <ons-page>
   <ons-toolbar>
     <div class="center">
-      Splitter+Navigator
+      欠席数カウント
     </div>
     <div class="right">
       <ons-toolbar-button onclick="fn.open()">
@@ -10,9 +10,72 @@
     </div>
   </ons-toolbar>
 
-  <h2>欠席数カウント</h2>
-
-  <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-    Swipe left to open the menu!
-  </p>
+  <ons-carousel fullscreen swipeable auto-scroll overscrollable id="carousel">
+    <ons-carousel-item>
+      <div style="text-align: center; margin-top: 10px">
+        <div class="segment" style="width: 280px; margin: 0 auto;">
+          <div class="segment__item">
+            <input type="radio" class="segment__input" name="segment-a" checked>
+            <div class="segment__button">カウント</div>
+          </div>
+          <div class="segment__item" onclick="fn.load('addCourse.html')">
+            <input type="radio" class="segment__input" name="segment-a">
+            <div class="segment__button">履修追加</div>
+          </div>
+          <div class="segment__item" onclick="fn.load('deleteCourse.html')">
+            <input type="radio" class="segment__input" name="segment-a">
+            <div class="segment__button">履修取り消し</div>
+          </div>
+        </div>
+      </div>
+    </ons-carousel-item>
+    <!--
+    <ons-carousel-item style="background-color: #085078;">
+      <div style="text-align: center; margin-top: 10px">
+        <ons-segment id="segment" tabbar-id="tabbar" style="width: 200px">
+        <button>
+          <input type="radio" class="segment__input" name="segment-a" checked>
+          Page 1
+        </button>
+        <button>
+          <input type="radio" class="segment__input" name="segment-a">
+          Page 1
+        </button>
+        <button>
+          <input type="radio" class="segment__input" name="segment-a">
+          Page 1
+        </button>
+      </ons-segment>
+      </div>
+      <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
+        <ons-icon icon="md-chevron-left" onclick="prev()"></ons-icon>
+         BLUE
+        <ons-icon icon="md-chevron-right" onclick="next()"></ons-icon>
+      </div>
+      <div style="text-align: center; font-size: 300px; margin-top: 100px; color: #fff">
+        5
+      </div>
+    </ons-carousel-item>
+    <ons-carousel-item style="background-color: #373B44;">
+      <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
+        <ons-icon icon="md-chevron-left" onclick="prev()"></ons-icon>
+          DARK
+        <ons-icon icon="md-chevron-right" onclick="next()"></ons-icon>
+      </div>
+      <div style="text-align: center; font-size: 300px; margin-top: 100px; color: #fff">
+        5
+      </div>
+    </ons-carousel-item>
+    <ons-carousel-item style="background-color: #D38312;">
+      <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
+        <ons-icon icon="md-chevron-left" onclick="prev()"></ons-icon>
+          ORANGE
+        <ons-icon icon="md-chevron-right" onclick="next()"></ons-icon>
+      </div>
+      <div style="text-align: center; font-size: 300px; margin-top: 100px; color: #fff">
+        5
+      </div>
+    </ons-carousel-item>
+    -->
+  </ons-carousel>
 </ons-page>

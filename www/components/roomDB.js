@@ -3,9 +3,9 @@ var clientKey = "e9d5a5fa0057afa0aa4b0eb0bbd0787c4849fffb165647ba122bbbc2e659930
 var ncmb = new NCMB(appKey, clientKey);
 
 function setDB(){
-  var RoomDB = ncmb.DataStore("RoomDB");
+  var CourseDB = ncmb.DataStore("CourseDB");
 
-  var roomDB = new RoomDB();
+  var courseDB = new CourseDB();
   roomDB.set("week", "平日")
               .set("roomname", "テニスコートB2")
               .set("roomid", "")
