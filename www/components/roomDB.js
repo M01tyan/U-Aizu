@@ -22,6 +22,50 @@ function setDB(){
               .catch(function(err){
                   //保存に失敗した場合の処理
               });
-
 }
-
+var campusStatus = new Array(70);
+for(i=0; i<70; i++){
+  campusStatus[i] = new Array(10);
+}
+//シラバスを抜き出す
+function getSchedule(){
+  var yobi= new Array("日","月","火","水","木","金","土");
+  var date = new Date();
+  var day = date.getDate();
+  var week = date.getDay();
+  $.ajax({
+      type: 'GET',
+      url: 'https://csweb.u-aizu.ac.jp/campusweb/campussquare.do?_flowId=KHW0001300-flow',
+      datatype: 'html',
+      success: function(data){
+        data = data.split("<td width=\"60%\" class=\"kyuko-cal-heijitsu center\">"+day+"("+yobi[week]+")</td>");
+        data = data[1].split("<td width=\"60%\" class=\"kyuko-cal-heijitsu center\">"+(day+1)+"("+yobi[(week+1)%7]+")</td>");
+        data = data[0].split("<td valign=\"top\">");
+        //console.log(data[1]);
+        for(i=1; i<70; i++){
+          var data2 = data[i].split("<span class=\"kyuko-shi-jugyo\">");
+          for(j=0; j<data2.length; j++){
+            var data3 = data2[j].split("</span>");
+            campusStatus[i][j] = data3[0];
+            console.log(campusStatus[i][j]);
+          }
+        }
+      },
+      error: function(err){
+        console.log(err);
+      }
+  });
+}
+function openSystem(){
+  ref = window.open('https://csweb.u-aizu.ac.jp/campusweb/campussmart.do?locale=ja_JP', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes,hidden=yes');
+  ref.addEventListener('loadstop', function() {
+      ref.executeScript({
+        code: "var userName = document.querySelector('#LoginFormSimple input[name=userName]'); userName.value='s1240236'; var password=document.querySelector('#LoginFormSimple input[name=password]'); password.value='No.1runner'; document.querySelector('#LoginFormSimple button').click();"
+      }, function() {
+        setTimeout(getSchedule, 2000);
+        setTimeout(ref.close, 10000);
+      });
+    });
+    return false;
+  //setTimeout(getSchedule, 10000);
+}
