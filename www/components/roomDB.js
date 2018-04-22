@@ -83,7 +83,7 @@ function openSystem(){
     ref = window.open('https://csweb.u-aizu.ac.jp/campusweb/campussmart.do?locale=ja_JP', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes,hidden=yes');
     ref.addEventListener('loadstop', function() {
         ref.executeScript({
-          code: "var userName = document.querySelector('#LoginFormSimple input[name=userName]'); userName.value='s1240236'; var password=document.querySelector('#LoginFormSimple input[name=password]'); password.value='No.1runner'; document.querySelector('#LoginFormSimple button').click();"
+          code: "var userName = document.querySelector('#LoginFormSimple input[name=userName]'); userName.value="+localStorage.getItem('userId')+"; var password=document.querySelector('#LoginFormSimple input[name=password]'); password.value="+localStorage.getItem('password')+"; document.querySelector('#LoginFormSimple button').click();"
         }, function() {
           setTimeout(getSchedule, 2000);
           setTimeout(ref.close, 10000);

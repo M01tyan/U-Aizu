@@ -92,7 +92,7 @@ button {
   .rounded;
   .trans;
   font-size:1.2em;
-  background:@button;
+  background:#F8F8FF;
   color:@base;
   box-shadow:0px 3px 0px @bottom;
   cursor:pointer;

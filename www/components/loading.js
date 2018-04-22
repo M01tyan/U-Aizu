@@ -1,8 +1,5 @@
-function signUp(){
+function login(){
   var form = document.forms.signUp;
-  localStorage.setItem('userId', JSON.stringify(form.text.value));
-  localStorage.setItem('password', JSON.stringify(form.password.value));
-  console.log(localStorage.getItem('userId'));
-  consoel.log(localStorage.getItem('password'));
-  window.fn.load('home.html');
+  localStorage.setItem('userId', JSON.stringify(form[0].value));
+  localStorage.setItem('password', JSON.stringify(form[1].value));
 }
