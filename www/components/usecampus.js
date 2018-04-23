@@ -66,7 +66,7 @@ function setUsedLists(lists) {
    list.refresh();
 }
 
-//部屋の詳細を表示
+/*******ダイアログ設定*******/
 function showTemplateDialog(index) {
   //dialogのidを取得
   var dialog = document.getElementById('my-dialog');
@@ -98,3 +98,4 @@ function hideDialog(id) {
   //dialogを閉じる
   document.getElementById(id).hide();
 }
+/********ここまで*********/
