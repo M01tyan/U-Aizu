@@ -3,14 +3,15 @@ var clientKey = "e9d5a5fa0057afa0aa4b0eb0bbd0787c4849fffb165647ba122bbbc2e659930
 var ncmb = new NCMB(appKey, clientKey);
 
 function setDB(){
-  var CourseDB = ncmb.DataStore("CourseDB");
+  var RoomDB = ncmb.DataStore("RoomDB");
 
-  var courseDB = new CourseDB();
-  roomDB.set("week", "平日")
-              .set("roomname", "テニスコートB2")
+  var roomDB = new RoomDB();
+  roomDB.set("orderid", 0)
+              .set("week", "平日")
+              .set("roomname", "212")
               .set("roomid", "")
-              .set("place", "運動場")
-              .set("type", "その他")
+              .set("place", "")
+              .set("type", "会議室")
               .set("open", "8:30")
               .set("close", "18:00")
               .set("status", true)
@@ -37,7 +38,6 @@ function getSchedule(){
   var date = new Date();
   var day = date.getDate();
   var week = date.getDay();
-  if(yobi[week] != "土" || yobi[week] != "日"){
     $.ajax({
         type: 'GET',
         url: 'https://csweb.u-aizu.ac.jp/campusweb/campussquare.do?_flowId=KHW0001300-flow',
@@ -58,23 +58,23 @@ function getSchedule(){
               }
               campusStatus[i][j].start = data4[0];
               campusStatus[i][j].end = data4[1];
-              //console.log(campusStatus[i][j]);
             }
           }
+          localStorage.setItem('campusStatus', JSON.stringify(campusStatus));
         },
         error: function(err){
           console.log(err);
         }
     });
-  } 
-  return campusStatus;
-}
+} 
 
 function openSystem(){
+  console.log("openSystem");
   var date = new Date();
   var day = date.getDate();
   var week = date.getDay();
-  if(localStorage.getItem('beforeDate') != day && (week != '0' || week != 6)){
+ //localStorage.setItem('beforeDate', JSON.stringify(1));
+  if(localStorage.getItem('beforeDate') != day){
     ref = window.open('https://csweb.u-aizu.ac.jp/campusweb/campussmart.do?locale=ja_JP', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes,hidden=yes');
     ref.addEventListener('loadstop', function() {
         ref.executeScript({
