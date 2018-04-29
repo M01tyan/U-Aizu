@@ -73,14 +73,14 @@ function openSystem(){
   var date = new Date();
   var day = date.getDate();
   var week = date.getDay();
- //localStorage.setItem('beforeDate', JSON.stringify(1));
+  //localStorage.setItem('beforeDate', JSON.stringify(1));
   if(localStorage.getItem('beforeDate') != day){
     ref = window.open('https://csweb.u-aizu.ac.jp/campusweb/campussmart.do?locale=ja_JP', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes,hidden=yes');
     ref.addEventListener('loadstop', function() {
         ref.executeScript({
           code: "var userName = document.querySelector('#LoginFormSimple input[name=userName]'); userName.value="+localStorage.getItem('userId')+"; var password=document.querySelector('#LoginFormSimple input[name=password]'); password.value="+localStorage.getItem('password')+"; document.querySelector('#LoginFormSimple button').click();"
         }, function() {
-          setTimeout(getSchedule, 2000);
+          //setTimeout(getSchedule, 2000);
           setTimeout(ref.close, 10000);
           localStorage.setItem('beforeDate', JSON.stringify(day));
         });
