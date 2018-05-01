@@ -1,4 +1,4 @@
-<ons-page>
+<ons-page id="addCourse">
   <ons-toolbar>
     <div class="center">
       欠席数カウント
@@ -31,73 +31,43 @@
     <ons-list>
       <ons-list-item tappable onclick="viewList(0)" style="background-color: #0e9193">教養科目</ons-list-item>
       <ons-list id="hiddenListLiberal" style="display: none">
-        <ons-list-header>人文・社会</ons-list-header>
-        <ons-list-item>HS01 哲学</ons-list-item>
-        <ons-list-item>HS03 心理学</ons-list-item>
-        <ons-list-item>HS04 言語学</ons-list-item>
-        <ons-list-item>HS05 文学</ons-list-item>
-        <ons-list-item>HS06 芸術学</ons-list-item>
-        <ons-list-item>HS07 ジェンダー・セクシュアリティ論</ons-list-item>
-        <ons-list-item>HS09 法学</ons-list-item>
-        <ons-list-item>HS10 経済学</ons-list-item>
-        <ons-list-item>HS11 社会学</ons-list-item>
-        <ons-list-item>HS12 日本国憲法</ons-list-item>
-        <ons-list-item>HS13 国際関係論</ons-list-item>
-        <ons-list-item>HS16 保健体育理論</ons-list-item>
-        <ons-list-item>HS17 科学史</ons-list-item>
-        <ons-list-item>HS18 社会シミュレーション</ons-list-item>
-        <ons-list-item>HS19 会津の歴史と文化</ons-list-item>
-        <ons-list-item>HS20 アカデミックスキル１</ons-list-item>
-        <ons-list-item>HS21 アカデミックスキル2</ons-list-item>
-        <ons-list-header>体育実技</ons-list-header>
-        <ons-list-item>PA01 体育実技１</ons-list-item>
-        <ons-list-item>PA02 体育実技２</ons-list-item>
-        <ons-list-item>PA03 体育実技３</ons-list-item>
-        <ons-list-item>PA04 体育実技４</ons-list-item>
+        <ons-list-header id="humanities">人文・社会</ons-list-header>
+        <ons-list-header id="gym">体育実技</ons-list-header>
       </ons-list>
       <ons-list-item tappable onclick="viewList(1)" style="background-color: #0e9193">外国語科目</ons-list-item>
       <ons-list id="hiddenListEnglish" style="display: none">
-        <ons-list-header>英語科目</ons-list-header>
-        <ons-list-item></ons-list-item>
-        <ons-list-header>EL1 Advanced English Acquisition</ons-list-header>
-        
-        <ons-list-header>EL2 Advanced Professional English Applic</ons-list-header>
-        <ons-lazy-repeat id="infinite-list">
-        </ons-lazy-repeat>
-        <ons-list-header>EL3 Advanced English and Technology</ons-list-header>
-        <ons-lazy-repeat id="infinite-list">
-        </ons-lazy-repeat>
-        <ons-list-header>EG1 Global Experience Gateway</ons-list-header>
-        <ons-lazy-repeat id="infinite-list">
-        </ons-lazy-repeat>
-        <ons-list-header>その他の言語科目</ons-list-header>
-        <ons-lazy-repeat id="infinite-list">
-        </ons-lazy-repeat>
+        <ons-list-header id="english">英語科目</ons-list-header>
+        <ons-list-header id="el1">EL1 Advanced English Acquisition</ons-list-header>
+        <ons-list-header id="el2">EL2 Advanced Professional English Applic</ons-list-header>
+        <ons-list-header id="el3">EL3 Advanced English and Technology</ons-list-header>
+        <ons-list-header id="eg1">EG1 Global Experience Gateway</ons-list-header>
+        <ons-list-header id="otherLanguage">その他の言語科目</ons-list-header>
       </ons-list>
       <ons-list-item tappable onclick="viewList(2)" style="background-color: #0e9193">専門教育科目・専門基礎科目</ons-list-item>
       <ons-list id="hiddenListBase" style="display: none">
-        <ons-lazy-repeat id="infinite-list">
-        </ons-lazy-repeat>
+        <ons-list-header id="math">数学関連科目</ons-list-header>
+        <ons-list-header id="nature">自然科学関連科目</ons-list-header>
+        <ons-list-header id="computer">コンピュータ基礎関連科目</ons-list-header>
+        <ons-list-header id="programming">プログラミング関連科目</ons-list-header>
+        <ons-list-header id="computerScience">コンピュータ理工学基礎関連科目</ons-list-header>
       </ons-list>
       <ons-list-item tappable onclick="viewList(3)" style="background-color: #0e9193">専門教育科目・専門科目</ons-list-item>
       <ons-list id="hiddenListExpert" style="display: none">
-        <ons-lazy-repeat id="infinite-list">
-        </ons-lazy-repeat>
+        <ons-list-header id="system">コンピュータ・システム関連科目</ons-list-header>
+        <ons-list-header id="network">コンピュータ・ネットワーク関連科目</ons-list-header>
+        <ons-list-header id="application">アプリケーション関連科目</ons-list-header>
+        <ons-list-header id="software">ソフトウェア・エンジニアリング関連科目</ons-list-header>
+        <ons-list-header id="other">その他の科目</ons-list-header>
       </ons-list>
       <ons-list-item tappable onclick="viewList(4)" style="background-color: #0e9193">総合演習</ons-list-item>
       <ons-list id="hiddenListExercise" style="display: none">
-        <ons-lazy-repeat id="infinite-list">
-        </ons-lazy-repeat>
+        <ons-list-header id="exercise">総合演習</ons-list-header>
       </ons-list>
       <ons-list-item tappable onclick="viewList(5)" style="background-color: #0e9193">教職に関する専門科目</ons-list-item>
       <ons-list id="hiddenListTeacher" style="display: none">
-        <ons-lazy-repeat id="infinite-list">
-        </ons-lazy-repeat>
       </ons-list>
       <ons-list-item tappable onclick="viewList(6)" style="background-color: #0e9193">課外プロジェクト</ons-list-item>
       <ons-list id="hiddenListProject" style="display: none">
-        <ons-lazy-repeat id="infinite-list">
-        </ons-lazy-repeat>
       </ons-list>
     </ons-list>
 </ons-page>
