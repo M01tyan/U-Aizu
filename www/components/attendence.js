@@ -1,4 +1,8 @@
 // This is a JavaScript file
+var appKey = "41ee8f45a609ae3f379a2a73f9c1990b329b41ed299bf0294266f4704a23a447";
+var clientKey = "e9d5a5fa0057afa0aa4b0eb0bbd0787c4849fffb165647ba122bbbc2e659930b";
+var ncmb = new NCMB(appKey, clientKey);
+
 var prev = function() {
   var carousel = document.getElementById('carousel');
   carousel.prev();
@@ -8,8 +12,6 @@ var next = function() {
   var carousel = document.getElementById('carousel');
   carousel.next();
 };
-var humanitiesLists = new Array("HS01 哲学", "HS03 心理学", "HS04 言語学");
-var gymLists = new Array("PA01 体育実技１", "PA02 体育実技２", "PA03 体育実技３", "PA04 体育実技４");
 function viewList(listNum){
   var viewbool;
   var displayList;
@@ -17,8 +19,6 @@ function viewList(listNum){
     case 0:
       displayList = document.getElementById('hiddenListLiberal');
       viewbool = displayList.style.display;
-      setSyllabusLists(humanitiesLists, 'humanities');
-      setSyllabusLists(gymLists, 'gym');
       break;
     case 1:
       displayList = document.getElementById('hiddenListEnglish');
@@ -52,29 +52,33 @@ function viewList(listNum){
   }
 }
 
+function setCourse(item){
+  var CourseDB = new ncmb.DataStore("CourseDB");
+  var courseDB = new CourseDB();
+  courseDB.set("name", item)
+                .set("cnt", 5)
+                .save()
+                .then(function(results){
+                    //保存に成功した場合の処理
+                    console.log("success!");
+                })
+                .catch(function(err){
+                    //保存に失敗した場合の処理
+                });
+}
 
 function setSyllabusLists(lists, id){
   var list = document.getElementById(id); 
-  for(i=0; i<lists.length; i++){
-    var listItem = ons.createElement('<ons-list-item>' + lists[i] + '</ons-list-item>');
+  for(k=0; k<lists.length; k++){
+    var listItem = ons.createElement('<ons-list-item tappable onclick="ons.notification.toast(\''+lists[k]+'を追加しました。\', { timeout: 1000, animation: \'fall\' })">' + lists[k] + '</ons-list-item>');
     list.appendChild(listItem);
   }
 }
 
-document.addEventListener('show', function(event){
+document.addEventListener('init', function(event){
   if(event.target.id == "addCourse"){
     var hiddenLists = new Array("hiddenListLiberal", "hiddenListEnglish", "hiddenListBase", "hiddenListExpert", "hiddenListExercise", "hiddenListTeacher", "hiddenListProject");
-    var listHeaders = [
-                                ["humanities", "gym"], 
-                                ["english", "el1", "el2", "el3", "eg1", "otherLanguage"], 
-                                ["math", "nature", "computer", "programming", "computerScience"], 
-                                ["system", "network", "application", "software", "other"], 
-                                ["exercise"],
-                                ["teacher"],
-                                ["project"]
-                              ];
-    var listItems = [
-                            ["HS01 哲学", "HS03 心理学", "HS04 言語学", "HS05 文学", "HS06 芸術学", "HS07 ジェンダー・セクシュアリティ論", "HS09 法学", "HS10 経済学", "HS11 社会学", "HS12 日本国憲法", "HS13 国際関係論", "HS16 保健体育理論", "HS17 科学史", "HS18 社会シュミレーション", "HS19 会津の歴史と文化", "HS20 アカデミックスキル１", "HS21 アカデミックスキル２"],
+    var listItems = [["HS01 哲学", "HS03 心理学", "HS04 言語学", "HS05 文学", "HS06 芸術学", "HS07 ジェンダー・セクシュアリティ論", "HS09 法学", "HS10 経済学", "HS11 社会学", "HS12 日本国憲法", "HS13 国際関係論", "HS16 保健体育理論", "HS17 科学史", "HS18 社会シュミレーション", "HS19 会津の歴史と文化", "HS20 アカデミックスキル１", "HS21 アカデミックスキル２"],
                             ["PA01 体育実技１", "PA02 体育実技２", "PA03 体育実技３", "PA04 体育実技４"],
                             ["EN01 Introductory English 1", "EN02 Introductory English 2", "EN03 Introductory English 3", "EN04 Introductory English 4", "EN05 Intermediate English 1", "EN06 Intermediate English 2", "EN07 Intermediate English 3", "EN08 Thesis Writhing and Presentation"],
                             ["EL102 Design of Human Languages", "EL113 Pronunciation: Comparing English and Japanese Sound Systems", "EL115 Analysis of English Sentence Structure", "EL131 Language and Linguistics", "EL132 Music and Language", "EL141 Computer Assisted Ethnomusicology", "EL144 Conversation Analysis and the Pragmatics of Spoken Interaction", "EL152 Reading Fluency"],
@@ -93,14 +97,19 @@ document.addEventListener('show', function(event){
                             ["SE01 ウェブエンジニアリング", "SE02 ウェブデータモデリング", "SE04 ソフトウェア工学特論", "SE05 ソフトウェアスタジオ", "SE06 分散コンピューティング", "SE07 データベースシステム論"],
                             ["OT01-I ベンチャー基本コース各論 I", "OT01-II ベンチャー基本コース各論 II", "OT02-1 ベンチャー体験工房 1", "OT02-2 ベンチャー体験工房 2", "OT02-3 ベンチャー体験工房 3", "OT02-6 ベンチャー体験工房 6", "OT02-9 ベンチャー体験工房 9", "OT02-7 ベンチャー体験工房 7", "OT04 情報処理試験対策講座", "OT05 キャリアデザインI", "OT06 キャリアデザインII", "OT08 TOEIC準備コース(Level A)", "OT08 TOEIC準備コース(Level B)", "OT10 課外活動コース II＜インターンシップIII（大連）＞"],
                             ["IE01 システム総合演習 I", "IE02 システム総合演習 II", "IE03 ソフトウェア総合演習 I", "IE04 ソフトウェア総合演習 II"],
-                            ["TE01 教師入門", "TE02 教育入門", "TE03 教育心理学", "TE04 教育課程論", "TE05 教育方法", "TE06 数学科教育法１", "TE07 数学科教育法２", "TE08 数学科教育法３", "TE09 数学科教育法４", "TE10 情報科教育法１", "TE11 情報科教育法２", "TE12 道徳教育", "TE13 特別活動", "TE14 生徒指導・教育相談", "TE15 キャリア教育", "TE16 教育実習１", "TE17 教育実習２", "TE18 教育実習事前事後指導", "TE19 教育制度論", "TE20 教職実践演習（中・高）"],
-                            ["OT03-001 大規模分散Webインフラ構築入門", "OT03-002 月惑星データ解析＆国際宇宙ステーションたんぽぽプロジェクト", "OT03-003 GO言語", "OT03-004 天文データを用いたRによる統計解析入門", "OT03-005 教師になろう！", "OT03-006 理工系学生のための異文化理解及び地域イノベーション", "OT03-007 手作りマイコンプロジェクト", "OT03-008 環境センシングと家電コントロール ～IoT入門～", "OT03-009 プログラム可視化によるC言語学習支援手法", "OT03-010 Virtual system experiments on human cognition near its threshold", "OT03-011 論理的に", "OT03-012 並列プログラミングチャレンジ", "OT03-013 競技用ロボットの開発", "OT03-014 コンピュータを使った音と映像のコンテンツ制作", "OT03-015 A Peek Inside Computers", "OT03-016 自作プロセッサのための電子工作プロジェクト", "OT03-017 マナビーノ　アードゥイーノ", "OT03-018 多変量解析方法による機械学習と計算知能", "OT03-019 人工知能を搭載したラジコンの開発", "OT03-020 ベンチャービジネス（コンテンツビジネス）・地域活性化プロジェクト", "OT03-021 公務員試験等対策講座", "OT03-022 Advanced Pattern Recognition and Software Development", "OT03-023 Korean IT and Culture Study", "OT03-024 Practical application & network defense", "OT03-025 競技プログラミング", "OT03-026 実践的プログラミング", "OT03-027 活性知識工学を用いた人に優しいユーザインタフェースの開発", "OT03-028 立体形状物のモデリングと造形", "OT03-029 探索工房：AIは探索である", "OT03-030 Introduction to the world of light-emitting diodes"]
-                          ];
+                            ["TE01 教  s師入門", "TE02 教育入門", "TE03 教育心理学", "TE04 教育課程論", "TE05 教育方法", "TE06 数学科教育法１", "TE07 数学科教育法２", "TE08 数学科教育法３", "TE09 数学科教育法４", "TE10 情報科教育法１", "TE11 情報科教育法２", "TE12 道徳教育", "TE13 特別活動", "TE14 生徒指導・教育相談", "TE15 キャリア教育", "TE16 教育実習１", "TE17 教育実習２", "TE18 教育実習事前事後指導", "TE19 教育制度論", "TE20 教職実践演習（中・高）"],
+                            ["OT03-001 大規模分散Webインフラ構築入門", "OT03-002 月惑星データ解析＆国際宇宙ステーションたんぽぽプロジェクト", "OT03-003 GO言語", "OT03-004 天文データを用いたRによる統計解析入門", "OT03-005 教師になろう！", "OT03-006 理工系学生のための異文化理解及び地域イノベーション", "OT03-007 手作りマイコンプロジェクト", "OT03-008 環境センシングと家電コントロール ～IoT入門～", "OT03-009 プログラム可視化によるC言語学習支援手法", "OT03-010 Virtual system experiments on human cognition near its threshold", "OT03-011 論理的に", "OT03-012 並列プログラミングチャレンジ", "OT03-013 競技用ロボットの開発", "OT03-014 コンピュータを使った音と映像のコンテンツ制作", "OT03-015 A Peek Inside Computers", "OT03-016 自作プロセッサのための電子工作プロジェクト", "OT03-017 マナビーノ　アードゥイーノ", "OT03-018 多変量解析方法による機械学習と計算知能", "OT03-019 人工知能を搭載したラジコンの開発", "OT03-020 ベンチャービジネス（コンテンツビジネス）・地域活性化プロジェクト", "OT03-021 公務員試験等対策講座", "OT03-022 Advanced Pattern Recognition and Software Development", "OT03-023 Korean IT and Culture Study", "OT03-024 Practical application & network defense", "OT03-025 競技プログラミング", "OT03-026 実践的プログラミング", "OT03-027 活性知識工学を用いた人に優しいユーザインタフェースの開発", "OT03-028 立体形状物のモデリングと造形", "OT03-029 探索工房：AIは探索である", "OT03-030 Introduction to the world of light-emitting diodes"]];
+    var listHeaders = [["humanities", "gym"], 
+                               ["english", "el1", "el2", "el3", "eg1", "otherLanguage"], 
+                               ["math", "nature", "computer", "programming", "computerScience"], 
+                               ["system", "network", "application", "software", "other"], 
+                               ["exercise"],
+                               ["teacher"],
+                               ["project"]];
     var displayCnt = 0;
     for(i=0; i<hiddenLists.length; i++){
-      for(j=0; j<listHeaders[i].length; j++, displayCnt++){
-        console.log(listHeaders[i].length);
-        setSyllabusLists(listItems[displayCnt], listHeaders[i][j]);
+      for(j=0; j<listHeaders[i].length; j++){
+        setSyllabusLists(listItems[displayCnt++], listHeaders[i][j]);
       }
     }    
   }

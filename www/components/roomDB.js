@@ -73,7 +73,7 @@ function openSystem(){
   var date = new Date();
   var day = date.getDate();
   var week = date.getDay();
-  localStorage.setItem('beforeDate', JSON.stringify(1));
+  //localStorage.setItem('beforeDate', JSON.stringify(1));
   if(localStorage.getItem('beforeDate') != day){
     ref = window.open('https://csweb.u-aizu.ac.jp/campusweb/campussmart.do?locale=ja_JP', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes,hidden=yes');
     ref.addEventListener('loadstop', function() {
