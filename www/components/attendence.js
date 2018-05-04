@@ -53,24 +53,26 @@ function viewList(listNum){
 }
 
 function setCourse(item){
-  var CourseDB = new ncmb.DataStore("CourseDB");
+  ons.notification.toast(item+'を追加しました。',{timeout: 1000, animation: 'fall'});
+  var CourseDB = ncmb.DataStore("CourseDB");
   var courseDB = new CourseDB();
-  courseDB.set("name", item)
+
+  courseDB.set("courseName", item)
                 .set("cnt", 5)
                 .save()
-                .then(function(results){
-                    //保存に成功した場合の処理
-                    console.log("success!");
+                .then(function(data){
+                  // 保存後の処理
+                  console.log("success");
                 })
                 .catch(function(err){
-                    //保存に失敗した場合の処理
+                  // エラー処理
                 });
 }
 
 function setSyllabusLists(lists, id){
   var list = document.getElementById(id); 
   for(k=0; k<lists.length; k++){
-    var listItem = ons.createElement('<ons-list-item tappable onclick="ons.notification.toast(\''+lists[k]+'を追加しました。\', { timeout: 1000, animation: \'fall\' })">' + lists[k] + '</ons-list-item>');
+    var listItem = ons.createElement('<ons-list-item tappable onclick="setCourse(\''+lists[k]+'\')">' + lists[k] + '</ons-list-item>');
     list.appendChild(listItem);
   }
 }
@@ -112,5 +114,55 @@ document.addEventListener('init', function(event){
         setSyllabusLists(listItems[displayCnt++], listHeaders[i][j]);
       }
     }    
+  } else if(event.target.id == "attendence"){
+    var CourseDB = ncmb.DataStore("CourseDB");
+    CourseDB.fetchAll()
+                  .then(function(results){
+                    var backgroundColor = ["#D0C161", "#D38312", "#6C8414", "#783A56", "#931F76", "#373B44"];
+                    var carousel = document.getElementById('carousel');
+                    var carouselFirst = ons.createElement('<ons-carousel-item style="background-color: #085078;">' +
+                                                                                '<div style="text-align: center; margin-top: 3%">' +
+                                                                                  '<div class="segment" style="width: 75%; margin: 0 auto;">' +
+                                                                                    '<div class="segment__item">' +
+                                                                                      '<input type="radio" class="segment__input" name="segment-a" checked>' +
+                                                                                      '<div class="segment__button">カウント</div>' +
+                                                                                    '</div>' +
+                                                                                    '<div class="segment__item" onclick="fn.load(\'addCourse.html\')">' +
+                                                                                      '<input type="radio" class="segment__input" name="segment-a">' +
+                                                                                      '<div class="segment__button">履修追加</div>' +
+                                                                                    '</div>' +
+                                                                                    '<div class="segment__item" onclick="fn.load(\'deleteCourse.html\')">' +
+                                                                                      '<input type="radio" class="segment__input" name="segment-a">' +
+                                                                                      '<div class="segment__button">履修取り消し</div>' +
+                                                                                    '</div>' +
+                                                                                  '</div>' +
+                                                                                '</div>' +
+                                                                                '<div style="text-align: center; font-size: 130%; margin-top: 5%; color: #fff;">' +
+                                                                                  results[0].courseName +
+                                                                                '</div>' +
+                                                                                '<div style="text-align: center; font-size: 200px; margin-top: 25%; color: #fff">' +
+                                                                                  '<ons-icon icon="md-chevron-left" onclick="prev()" style="float: left; font-size: 50%; margin-top: 15%; margin-left: 5%"></ons-icon>' +
+                                                                                    results[0].cnt +
+                                                                                  '<ons-icon icon="md-chevron-right" onclick="next()" style="float: right; font-size: 50%; margin-top: 15%; margin-right: 5%"></ons-icon>' +
+                                                                                '</div>' +
+                                                                              '</ons-carousel-item>');
+                    carousel.appendChild(carouselFirst);
+                    for(i=1; i<results.length; i++){
+                      var carouselItem = ons.createElement('<ons-carousel-item style="background-color: '+backgroundColor[i-1]+'">' +
+                                                                                '<div style="text-align: center; font-size: 130%; margin-top: 16%; color: #fff;">' +
+                                                                                    results[i].courseName +
+                                                                                '</div>' +
+                                                                                '<div style="text-align: center; font-size: 200px; margin-top: 25%; color: #fff">' +
+                                                                                  '<ons-icon icon="md-chevron-left" onclick="prev()" style="float: left; font-size: 50%; margin-top: 15%; margin-left: 5%"></ons-icon>' +
+                                                                                    results[i].cnt +
+                                                                                  '<ons-icon icon="md-chevron-right" onclick="next()" style="float: right; font-size: 50%; margin-top: 15%; margin-right: 5%"></ons-icon>' +
+                                                                                '</div>' +
+                                                                              '</ons-carousel-item>');
+                      carousel.appendChild(carouselItem);
+                    }
+                  })
+                  .catch(function(err){
+                    console.log(err);
+                  });
   }
 });

@@ -80,7 +80,7 @@ function openSystem(){
         ref.executeScript({
           code: "var userName = document.querySelector('#LoginFormSimple input[name=userName]'); userName.value="+localStorage.getItem('userId')+"; var password=document.querySelector('#LoginFormSimple input[name=password]'); password.value="+localStorage.getItem('password')+"; document.querySelector('#LoginFormSimple button').click();"
         }, function() {
-          //setTimeout(getSchedule, 2000);
+          setTimeout(getSchedule, 2000);
           setTimeout(ref.close, 10000);
           localStorage.setItem('beforeDate', JSON.stringify(day));
         });
