@@ -69,6 +69,42 @@ function setCourse(item){
                 });
 }
 
+function deleteCourse(item){
+  ons.notification.toast(item+'を削除しました。',{timeout: 1000, animation: 'fall'});
+  var CourseDB = ncmb.DataStore("CourseDB");
+
+  CourseDB.equalTo("courseName", item)
+                .fetch()
+                .then(function (results){
+                  results.delete()
+                            .then(function (item){
+                              var deleteList = document.getElementById('deleteList');
+                              var removeList = deleteList.childNodes;
+                              for(var i=0; removeList.length>0; i++) {
+                                deleteList.removeChild(removeList[0]);
+                              }
+                              CourseDB.fetchAll()
+                                            .then(function(results){
+                                              for(i=0; i<results.length; i++){
+                                                var deleteListItem = ons.createElement('<ons-list-item tappable onclick="deleteCourse(\''+results[i].courseName+'\')">'+results[i].courseName+
+                                                                                                            '<div class="right">' +
+                                                                                                              '<ons-icon icon="ion-ios-trash" style="font-size: 150%">' +
+                                                                                                            '</div>' +
+                                                                                                          '</ons-list-item>');
+                                                deleteList.appendChild(deleteListItem);
+                                              }
+                                            })
+                                            .catch(function(err) {
+                                              console.log(err);
+                                            });
+                            })
+                            .catch(function (err){
+                            });
+                })
+                .catch(function (err) {
+                });
+}
+
 function setSyllabusLists(lists, id){
   var list = document.getElementById(id); 
   for(k=0; k<lists.length; k++){
@@ -140,14 +176,24 @@ document.addEventListener('init', function(event){
                                                                                 '<div style="text-align: center; font-size: 130%; margin-top: 5%; color: #fff;">' +
                                                                                   results[0].courseName +
                                                                                 '</div>' +
-                                                                                '<div style="text-align: center; font-size: 200px; margin-top: 25%; color: #fff">' +
-                                                                                  '<ons-icon icon="md-chevron-left" onclick="prev()" style="float: left; font-size: 50%; margin-top: 15%; margin-left: 5%"></ons-icon>' +
+                                                                                '<div style="text-align: center; font-size: 200px; margin-top: 25%; margin-left: 13%; color: #fff">' +
                                                                                     results[0].cnt +
                                                                                   '<ons-icon icon="md-chevron-right" onclick="next()" style="float: right; font-size: 50%; margin-top: 15%; margin-right: 5%"></ons-icon>' +
                                                                                 '</div>' +
                                                                               '</ons-carousel-item>');
                     carousel.appendChild(carouselFirst);
                     for(i=1; i<results.length; i++){
+                      if(i == results.length-1){
+                        var carouselItem = ons.createElement('<ons-carousel-item style="background-color: '+backgroundColor[i-1]+'">' +
+                                                                                  '<div style="text-align: center; font-size: 130%; margin-top: 16%; color: #fff;">' +
+                                                                                      results[i].courseName +
+                                                                                  '</div>' +
+                                                                                  '<div style="text-align: center; font-size: 200px; margin-top: 25%; margin-right: 13%; color: #fff">' +
+                                                                                    '<ons-icon icon="md-chevron-left" onclick="prev()" style="float: left; font-size: 50%; margin-top: 15%; margin-left: 5%"></ons-icon>' +
+                                                                                      results[i].cnt +
+                                                                                  '</div>' +
+                                                                                 '</ons-carousel-item>');
+                      } else {
                       var carouselItem = ons.createElement('<ons-carousel-item style="background-color: '+backgroundColor[i-1]+'">' +
                                                                                 '<div style="text-align: center; font-size: 130%; margin-top: 16%; color: #fff;">' +
                                                                                     results[i].courseName +
@@ -158,10 +204,28 @@ document.addEventListener('init', function(event){
                                                                                   '<ons-icon icon="md-chevron-right" onclick="next()" style="float: right; font-size: 50%; margin-top: 15%; margin-right: 5%"></ons-icon>' +
                                                                                 '</div>' +
                                                                               '</ons-carousel-item>');
+                      }
                       carousel.appendChild(carouselItem);
                     }
                   })
                   .catch(function(err){
+                    console.log(err);
+                  });
+  } else if(event.target.id == "deleteCourse"){
+    var CourseDB = ncmb.DataStore("CourseDB");
+    CourseDB.fetchAll()
+                  .then(function(results){
+                    var deleteList = document.getElementById('deleteList');
+                    for(i=0; i<results.length; i++){
+                      var deleteListItem = ons.createElement('<ons-list-item tappable onclick="deleteCourse(\''+results[i].courseName+'\')">'+results[i].courseName+
+                                                                                  '<div class="right">' +
+                                                                                    '<ons-icon icon="ion-ios-trash" style="font-size: 150%">' +
+                                                                                  '</div>' +
+                                                                                 '</ons-list-item>');
+                      deleteList.appendChild(deleteListItem);
+                    }
+                  })
+                  .catch(function(err) {
                     console.log(err);
                   });
   }
