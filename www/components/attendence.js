@@ -3,15 +3,16 @@ var appKey = "41ee8f45a609ae3f379a2a73f9c1990b329b41ed299bf0294266f4704a23a447";
 var clientKey = "e9d5a5fa0057afa0aa4b0eb0bbd0787c4849fffb165647ba122bbbc2e659930b";
 var ncmb = new NCMB(appKey, clientKey);
 
-var prev = function() {
+function prev() {
   var carousel = document.getElementById('carousel');
   carousel.prev();
-};
+}
 
-var next = function() {
+function next() {
   var carousel = document.getElementById('carousel');
   carousel.next();
-};
+}
+
 function viewList(listNum){
   var viewbool;
   var displayList;
@@ -180,6 +181,10 @@ document.addEventListener('init', function(event){
                                                                                     results[0].cnt +
                                                                                   '<ons-icon icon="md-chevron-right" onclick="next()" style="float: right; font-size: 50%; margin-top: 15%; margin-right: 5%"></ons-icon>' +
                                                                                 '</div>' +
+                                                                                '<div style="text-align: center; font-size: 200%; margin-top: 10%; color: #fff">' +
+                                                                                  '<ons-icon icon="ion-plus-round" style="margin-right: 10%"></ons-icon>'+
+                                                                                  '<ons-icon icon="ion-minus-round" style="margin-left: 10%"></ons-icon>' +
+                                                                                '</div>' +
                                                                               '</ons-carousel-item>');
                     carousel.appendChild(carouselFirst);
                     for(i=1; i<results.length; i++){
@@ -192,6 +197,10 @@ document.addEventListener('init', function(event){
                                                                                     '<ons-icon icon="md-chevron-left" onclick="prev()" style="float: left; font-size: 50%; margin-top: 15%; margin-left: 5%"></ons-icon>' +
                                                                                       results[i].cnt +
                                                                                   '</div>' +
+                                                                                  '<div style="text-align: center; font-size: 200%; margin-top: 10%; color: #fff">' +
+                                                                                    '<ons-icon icon="ion-plus-round" style="margin-right: 10%"></ons-icon>'+
+                                                                                    '<ons-icon icon="ion-minus-round" style="margin-left: 10%"></ons-icon>' +
+                                                                                  '</div>' +
                                                                                  '</ons-carousel-item>');
                       } else {
                       var carouselItem = ons.createElement('<ons-carousel-item style="background-color: '+backgroundColor[i-1]+'">' +
@@ -202,6 +211,10 @@ document.addEventListener('init', function(event){
                                                                                   '<ons-icon icon="md-chevron-left" onclick="prev()" style="float: left; font-size: 50%; margin-top: 15%; margin-left: 5%"></ons-icon>' +
                                                                                     results[i].cnt +
                                                                                   '<ons-icon icon="md-chevron-right" onclick="next()" style="float: right; font-size: 50%; margin-top: 15%; margin-right: 5%"></ons-icon>' +
+                                                                                '</div>' +
+                                                                                '<div style="text-align: center; font-size: 200%; margin-top: 10%; color: #fff">' +
+                                                                                  '<ons-icon icon="ion-plus-round" style="margin-right: 10%"></ons-icon>'+
+                                                                                  '<ons-icon icon="ion-minus-round" style="margin-left: 10%"></ons-icon>' +
                                                                                 '</div>' +
                                                                               '</ons-carousel-item>');
                       }
