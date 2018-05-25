@@ -68,23 +68,41 @@ function getSchedule(){
     });
 } 
 
-function openSystem(){
-  console.log("openSystem");
-  var date = new Date();
-  var day = date.getDate();
-  var week = date.getDay();
-  //localStorage.setItem('beforeDate', JSON.stringify(1));
-  if(localStorage.getItem('beforeDate') != day){
-    ref = window.open('https://csweb.u-aizu.ac.jp/campusweb/campussmart.do?locale=ja_JP', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes,hidden=yes');
-    ref.addEventListener('loadstop', function() {
-        ref.executeScript({
-          code: "var userName = document.querySelector('#LoginFormSimple input[name=userName]'); userName.value="+localStorage.getItem('userId')+"; var password=document.querySelector('#LoginFormSimple input[name=password]'); password.value="+localStorage.getItem('password')+"; document.querySelector('#LoginFormSimple button').click();"
-        }, function() {
-          setTimeout(getSchedule, 2000);
-          setTimeout(ref.close, 10000);
-          localStorage.setItem('beforeDate', JSON.stringify(day));
+document.addEventListener('show', function(event){
+  if(event.target.id == 'home'){
+    var date = new Date();
+    var day = date.getDate();
+    var week = date.getDay();
+    
+    localStorage.setItem('beforeDate', JSON.stringify(1));
+    if(localStorage.getItem('beforeDate') != day){
+    console.log("openSystem");
+      var ref  = window.open('https://csweb.u-aizu.ac.jp/campusweb/campussmart.do?locale=ja_JP', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes,hidden=yes');
+        ref.addEventListener('loadstop', function() {
+            ref.executeScript({
+              code: "var userName = document.querySelector('#LoginFormSimple input[name=userName]'); userName.value="+localStorage.getItem('userId')+"; var password=document.querySelector('#LoginFormSimple input[name=password]'); password.value="+localStorage.getItem('password')+"; document.querySelector('#LoginFormSimple button').click();"
+            }, function() {
+              setTimeout(getSchedule, 2000);
+              setTimeout(ref.close, 10000);
+              localStorage.setItem('beforeDate', JSON.stringify(day));
+            });
+          return false;
         });
-      });
-      return false;
+      $.ajax({
+        type: 'GET',
+        url: 'http://www.gakushoku.com/univ_mn1.php',
+        datatype: 'html',
+        success: function(data){
+          data = data.split('<table class="day">');
+          //console.log(data[1]);
+          var data1 = data[1].split('</th>');
+          console.log(data1[1]);
+          console.log(data1[5]);
+        },
+        error: function(err){
+          console.log(err);
+        }
+    });
+    } 
   }
-}
+});

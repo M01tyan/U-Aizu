@@ -11,8 +11,8 @@ document.addEventListener('init', function(event) {
     if(localStorage.getItem('userId') == null) {
       setTimeout(function() {fn.load('firstLogin.html')}, 2000);
     } else {
-      //openSystem();
       setTimeout(function (){fn.load('home.html');}, 2000);
     }
   }
+  
 });
