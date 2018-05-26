@@ -67,7 +67,15 @@ function getSchedule(){
         }
     });
 } 
-
+var lunch;;
+var don;
+var pasta;
+var fish;
+var salad;
+var dessert;
+var single;
+var udon;
+var dinner;
 document.addEventListener('show', function(event){
   if(event.target.id == 'home'){
     var date = new Date();
@@ -88,21 +96,52 @@ document.addEventListener('show', function(event){
             });
           return false;
         });
+      var menu = [];
       $.ajax({
         type: 'GET',
         url: 'http://www.gakushoku.com/univ_mn1.php',
         datatype: 'html',
         success: function(data){
-          data = data.split('<table class="day">');
-          //console.log(data[1]);
-          var data1 = data[1].split('</th>');
-          console.log(data1[1]);
-          console.log(data1[5]);
+          $(data).find('td').each(function() {
+            menu.push($(this).text());
+          });
+          lunch = menu.slice(0, 5);
+          don = menu.slice(5, 10);
+          pasta = menu.slice(10, 15);
+          fish = menu.slice(15, 20);
+          salad = menu.slice(20, 25);
+          dessert = menu.slice(25, 30);
+          single = menu.slice(30, 35);
+          udon = menu.slice(35, 40);
+          dinner = menu.slice(40, 45);
         },
         error: function(err){
           console.log(err);
         }
     });
     } 
+  }
+});
+
+document.addEventListener('show', function(event){
+  if(event.target.id == 'gakushoku'){
+      var menuLunch = document.getElementById('menu-lunch');
+      var menuDon = document.getElementById('menu-don');
+      var menuPasta = document.getElementById('menu-pasta');
+      var menuFish = document.getElementById('menu-fish');
+      var menuSalad = document.getElementById('menu-salad');
+      var menuDessert = document.getElementById('menu-dessert');
+      var menuSingle = document.getElementById('menu-single');
+      var menuUdon = document.getElementById('menu-udon');
+      var menuDinner = document.getElementById('menu-dinner');
+      menuLunch.innerHTML = lunch[0];
+      menuDon.innerHTML = don[0];
+      menuPasta.innerHTML = pasta[0];
+      menuFish.innerHTML = fish[0];
+      menuSalad.innerHTML = salad[0];
+      menuDessert.innerHTML = dessert[0];
+      menuSingle.innerHTML = single[0];
+      menuUdon.innerHTML = udon[0];
+      menuDinner.innerHTML = dinner[0];
   }
 });

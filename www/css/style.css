@@ -6,3 +6,13 @@ h2 {
 .u-aizu-logo {
   text-align: center;
 }
+
+ons-col {
+  border: 1px solid #ccc;
+  overflow: hidden;
+  padding: 5%;
+  color: #ffffff;
+}
+ #col-item {
+  background: #66CCCC;
+ }
