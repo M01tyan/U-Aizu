@@ -43,21 +43,61 @@ function getSchedule(){
         url: 'https://csweb.u-aizu.ac.jp/campusweb/campussquare.do?_flowId=KHW0001300-flow',
         datatype: 'html',
         success: function(data){
-          data = data.split("<td width=\"60%\" class=\"kyuko-cal-heijitsu center\">"+day+"("+yobi[week]+")</td>");
-          data = data[1].split("<td width=\"60%\" class=\"kyuko-cal-heijitsu center\">"+(day+1)+"("+yobi[(week+1)]+")</td>");
-          data = data[0].split("<td valign=\"top\">");
-          for(i=1; i<70; i++){
-            var data2 = data[i].split("<span class=\"kyuko-shi-jugyo\">");
-            for(j=0; j<data2.length; j++){
-              var data3 = data2[j].split("</span>");
-              if(data3[0].match('<br>')) break;
-              var data4 = data3[0].split(/-|\s/, 3);
-              if(data4[0] == '&lt;&lt;'){
-                data4[0] = "0:00";
-                data4[1] = "23:59";
+          var data1 = [];
+          var data2 = [];
+          var i = 0;
+          
+          //table列を配列にpush
+          $(data).find('td').each(function() {
+            if(i > 19 && i < 71){
+              if(i%2 == 0) data1.push($(this).text());
+            } else if(71 < i && i < 96){
+              if(i%2 == 1) data1.push($(this).text());
+            } else if(96 < i && i < 105){
+              if(i%2 == 0) data1.push($(this).text());
+            } else if(105 < i && i < 124){
+              if(i%2 == 1) data1.push($(this).text());
+            } else if(124 < i && i < 135){
+              if(i%2 == 0) data1.push($(this).text());
+            } else if(135 < i && i < 162){
+              if(i%2 == 1) data1.push($(this).text());
+            }
+            i++;
+          });
+
+          //列を行に分ける
+          for(i=0; i<data1.length; i++){
+            data2[i] = data1[i].split("　");
+          }
+
+          //時刻だけ抜き出す
+          for(k=0; k<data2.length; k++){
+            for(i=1; i<data2[k].length-1; i++){
+              var cnt = 0;
+              for(j=0; j<data2[k][i].length; j++){
+                if(isNaN(data2[k][i][j])) cnt++;
+                else {
+                  if(data2[k][i][j] == " "){
+                    cnt++;
+                    continue;
+                  } 
+                  data2[k][i] = data2[k][i].slice(cnt);
+                  break;
+                }
               }
-              campusStatus[i][j].start = data4[0];
-              campusStatus[i][j].end = data4[1];
+            }
+          }
+
+          //localStorageに保存
+          for(i=0; i<data2.length; i++){
+            for(j=0; j<data2[i].length-1; j++){
+              var data = data2[i][j].split("-");
+              if(data[0] == "<<"){
+                data[0] = "0:00";
+                data[1] = "23:59";
+              }
+              campusStatus[i][j].start = data[0];
+              campusStatus[i][j].end = data[1];
             }
           }
           localStorage.setItem('campusStatus', JSON.stringify(campusStatus));
@@ -67,6 +107,8 @@ function getSchedule(){
         }
     });
 } 
+
+
 var lunch;;
 var don;
 var pasta;
