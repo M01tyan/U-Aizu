@@ -118,13 +118,14 @@ var dessert;
 var single;
 var udon;
 var dinner;
+var index;
 document.addEventListener('show', function(event){
   if(event.target.id == 'home'){
     var date = new Date();
     var day = date.getDate();
     var week = date.getDay();
     
-    localStorage.setItem('beforeDate', JSON.stringify(1));
+    //localStorage.setItem('beforeDate', JSON.stringify(2));
     if(localStorage.getItem('beforeDate') != day){
     console.log("openSystem");
       var ref  = window.open('https://csweb.u-aizu.ac.jp/campusweb/campussmart.do?locale=ja_JP', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes,hidden=yes');
@@ -144,6 +145,13 @@ document.addEventListener('show', function(event){
         url: 'http://www.gakushoku.com/univ_mn1.php',
         datatype: 'html',
         success: function(data){
+          var i = 0;
+          $(data).find('th').each(function (){
+            var now = $(this).text();
+            now = now.split('日');
+            if(now[0] == day) index = i;
+            i++;
+          });
           $(data).find('td').each(function() {
             menu.push($(this).text());
           });
@@ -176,14 +184,14 @@ document.addEventListener('show', function(event){
       var menuSingle = document.getElementById('menu-single');
       var menuUdon = document.getElementById('menu-udon');
       var menuDinner = document.getElementById('menu-dinner');
-      menuLunch.innerHTML = lunch[0];
-      menuDon.innerHTML = don[0];
-      menuPasta.innerHTML = pasta[0];
-      menuFish.innerHTML = fish[0];
-      menuSalad.innerHTML = salad[0];
-      menuDessert.innerHTML = dessert[0];
-      menuSingle.innerHTML = single[0];
-      menuUdon.innerHTML = udon[0];
-      menuDinner.innerHTML = dinner[0];
+      menuLunch.innerHTML = lunch[index-1];
+      menuDon.innerHTML = don[index-1];
+      menuPasta.innerHTML = pasta[index-1];
+      menuFish.innerHTML = fish[index-1];
+      menuSalad.innerHTML = salad[index-1];
+      menuDessert.innerHTML = dessert[index-1];
+      menuSingle.innerHTML = single[index-1];
+      menuUdon.innerHTML = udon[index-1];
+      menuDinner.innerHTML = dinner[index-1];
   }
 });
