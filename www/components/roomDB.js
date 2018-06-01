@@ -109,23 +109,13 @@ function getSchedule(){
 } 
 
 
-var lunch;;
-var don;
-var pasta;
-var fish;
-var salad;
-var dessert;
-var single;
-var udon;
-var dinner;
-var index;
 document.addEventListener('show', function(event){
   if(event.target.id == 'home'){
     var date = new Date();
     var day = date.getDate();
     var week = date.getDay();
     
-    //localStorage.setItem('beforeDate', JSON.stringify(2));
+    localStorage.setItem('beforeDate', JSON.stringify(2));
     if(localStorage.getItem('beforeDate') != day){
     console.log("openSystem");
       var ref  = window.open('https://csweb.u-aizu.ac.jp/campusweb/campussmart.do?locale=ja_JP', '_blank', 'toolbar=yes,location=no,toolbarposition=buttom,enableViewportScale=yes,hidden=yes');
@@ -139,31 +129,34 @@ document.addEventListener('show', function(event){
             });
           return false;
         });
-      var menu = [];
       $.ajax({
         type: 'GET',
         url: 'http://www.gakushoku.com/univ_mn1.php',
         datatype: 'html',
         success: function(data){
           var i = 0;
+          var index;
           $(data).find('th').each(function (){
             var now = $(this).text();
             now = now.split('日');
             if(now[0] == day) index = i;
             i++;
           });
+          var menu = [];
           $(data).find('td').each(function() {
             menu.push($(this).text());
           });
-          lunch = menu.slice(0, 5);
-          don = menu.slice(5, 10);
-          pasta = menu.slice(10, 15);
-          fish = menu.slice(15, 20);
-          salad = menu.slice(20, 25);
-          dessert = menu.slice(25, 30);
-          single = menu.slice(30, 35);
-          udon = menu.slice(35, 40);
-          dinner = menu.slice(40, 45);
+          var gakushoku = [];
+          gakushoku.push(menu[index-1]);
+          gakushoku.push(menu[5+index-1]);
+          gakushoku.push(menu[10+index-1]);
+          gakushoku.push(menu[15+index-1]);
+          gakushoku.push(menu[20+index-1]);
+          gakushoku.push(menu[25+index-1]);
+          gakushoku.push(menu[30+index-1]);
+          gakushoku.push(menu[35+index-1]);
+          gakushoku.push(menu[40+index-1]);
+          localStorage.setItem('gakushoku', JSON.stringify(gakushoku));
         },
         error: function(err){
           console.log(err);
@@ -175,23 +168,10 @@ document.addEventListener('show', function(event){
 
 document.addEventListener('show', function(event){
   if(event.target.id == 'gakushoku'){
-      var menuLunch = document.getElementById('menu-lunch');
-      var menuDon = document.getElementById('menu-don');
-      var menuPasta = document.getElementById('menu-pasta');
-      var menuFish = document.getElementById('menu-fish');
-      var menuSalad = document.getElementById('menu-salad');
-      var menuDessert = document.getElementById('menu-dessert');
-      var menuSingle = document.getElementById('menu-single');
-      var menuUdon = document.getElementById('menu-udon');
-      var menuDinner = document.getElementById('menu-dinner');
-      menuLunch.innerHTML = lunch[index-1];
-      menuDon.innerHTML = don[index-1];
-      menuPasta.innerHTML = pasta[index-1];
-      menuFish.innerHTML = fish[index-1];
-      menuSalad.innerHTML = salad[index-1];
-      menuDessert.innerHTML = dessert[index-1];
-      menuSingle.innerHTML = single[index-1];
-      menuUdon.innerHTML = udon[index-1];
-      menuDinner.innerHTML = dinner[index-1];
+    var gakushoku = JSON.parse(localStorage.getItem('gakushoku'));
+    for(var i=0; i<gakushoku.length; i++){
+      var menu = document.getElementById('menu-'+i);
+      menu.innerHTML = gakushoku[i];
+    }
   }
 });
