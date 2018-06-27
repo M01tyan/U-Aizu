@@ -131,7 +131,7 @@ document.addEventListener('show', function(event){
         });
       $.ajax({
         type: 'GET',
-        url: 'http://www.gakushoku.com/univ_mn1.php',
+        url: 'http://www.gakushoku.com/univ_mn2.php',
         datatype: 'html',
         success: function(data){
           var i = 0;
